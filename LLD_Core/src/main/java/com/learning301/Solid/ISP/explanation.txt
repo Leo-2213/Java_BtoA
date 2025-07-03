@@ -1,0 +1,32 @@
+## Analysis of ISP Implementation
+
+### Bad Code Implementation
+In the BadCode package, there's a violation of the Interface Segregation Principle:
+
+1. The `Machine` interface forces all implementing classes to provide both `print()` and `scan()` methods.
+2. `SimplePrinter` class doesn't actually support scanning but is forced to implement the `scan()` method, which throws a `RuntimeException`.
+3. This leads to a problematic situation where calling `scan()` on a `SimplePrinter` will throw an exception at runtime.
+4. Clients are forced to depend on methods they don't use.
+
+### Good Code Implementation
+The GoodCode package correctly applies the Interface Segregation Principle:
+
+1. Interfaces are segregated into `Printers` and `Scanners`, each with a single responsibility.
+2. Classes implement only the interfaces they need:
+   - `EpsonPrinter` implements only `Printers`
+   - `EpsonScanner` implements only `Scanners`
+   - `MultiPurposeMachine` implements both interfaces since it supports both functionalities
+3. No class is forced to implement methods it doesn't need.
+4. Clients can depend only on the interfaces they actually use.
+
+## Key Benefits of ISP
+
+1. **Focused Interfaces**: Each interface has a single responsibility.
+2. **No Forced Implementation**: Classes only implement methods they can actually support.
+3. **Client-Specific Interfaces**: Clients can depend only on the interfaces they need.
+4. **Flexibility**: It's easy to add new types of devices without modifying existing code.
+5. **Safety**: No runtime exceptions due to unsupported operations.
+
+This example effectively demonstrates the core principle of ISP:
+- Clients should not be forced to depend on interfaces they do not use.
+- Many client-specific interfaces are better than one general-purpose interface.

@@ -1,0 +1,31 @@
+## Analysis of LSP Implementation
+
+### Bad Code Implementation
+In the BadCode package, there's a violation of the Liskov Substitution Principle:
+
+1. The `Bird` interface assumes all birds can fly by including a `fly()` method.
+2. The `Ostrich` class implements `Bird` but cannot properly fulfill the `fly()` method since ostriches cannot fly in reality.
+3. The `Ostrich` implementation either gives misleading output ("Ostrich cannot fly") or could throw an exception.
+4. This means an `Ostrich` cannot be substituted for a `Bird` without affecting program behavior.
+5. Even though `Cookoo` can properly implement the `fly()` method, the overall hierarchy is flawed.
+
+### Good Code Implementation
+The GoodCode package correctly applies the Liskov Substitution Principle:
+
+1. The base `Bird` interface includes only methods that all birds can implement correctly (like `eat()`).
+2. A specialized `FlyingBirds` interface extends `Bird` and adds the `fly()` method.
+3. `Ostrich` implements only the `Bird` interface since it cannot fly.
+4. `Cookoo` implements the `FlyingBirds` interface since it can both eat and fly.
+5. This hierarchy ensures that any subtype can be substituted for its base type without affecting program behavior.
+
+## Key Benefits of LSP
+
+1. **Behavioral Correctness**: Subtypes guarantee the behavior expected by clients of the base type.
+2. **No Surprises**: No unexpected exceptions or incorrect behavior when using subtypes.
+3. **Proper Hierarchy**: Class hierarchy reflects real-world capabilities.
+4. **Code Reusability**: Code that works with base types works correctly with all subtypes.
+5. **Design Clarity**: Clear separation between different types of behaviors.
+
+This example effectively demonstrates the core principle of LSP:
+- Objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program.
+- Subtypes must be substitutable for their base types.

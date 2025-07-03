@@ -1,0 +1,37 @@
+## Analysis of SRP Implementation
+
+### Bad Code Implementation
+In the BadCode package, there's a violation of the Single Responsibility Principle:
+
+1. The `TicketsBooking` class handles multiple responsibilities:
+   - Booking tickets
+   - Printing tickets
+   - Processing payments
+   - Sending email notifications
+2. This violates SRP because the class has more than one reason to change.
+3. If the payment system changes, email notification system changes, or ticket printing changes, this single class must be modified.
+4. The class is difficult to test, maintain, and reuse.
+
+### Good Code Implementation
+The GoodCode package correctly applies the Single Responsibility Principle:
+
+1. Responsibilities are separated into distinct classes:
+   - `TicketsBooking` handles only ticket-related operations
+   - `Payment` handles only payment processing
+   - `EmailSender` handles only email notifications
+2. Each class has a single responsibility and a single reason to change.
+3. Interfaces (`ITicketService`, `IPaymentService`, `IEmailService`) define clear contracts.
+4. The `Bookings` class orchestrates the process but delegates specific tasks to specialized services.
+5. Dependency injection is used to provide flexibility and testability.
+
+## Key Benefits of SRP
+
+1. **Maintainability**: Changes to one aspect don't affect unrelated aspects.
+2. **Testability**: Each component can be tested in isolation.
+3. **Reusability**: Components can be reused in different contexts.
+4. **Readability**: Code is more focused and easier to understand.
+5. **Flexibility**: Components can be replaced or modified independently.
+
+This example effectively demonstrates the core principle of SRP:
+- A class should have only one reason to change.
+- A class should have only one responsibility or job to do.

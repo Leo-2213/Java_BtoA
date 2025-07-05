@@ -1,0 +1,59 @@
+# Memento Pattern Explanation
+
+## Overview
+The Memento Pattern is a behavioral design pattern that allows capturing and externalizing an object's internal state without violating encapsulation, so that the object can be restored to this state later. It's particularly useful for implementing features like undo mechanisms.
+
+## Components in this Implementation
+
+1. **TextEditor (Originator)**
+   - The object whose state needs to be saved and restored
+   - Creates mementos containing snapshots of its current state
+   - Uses mementos to restore its previous state
+   - Maintains the content that can be modified and restored
+
+2. **EditorMemento (Memento)**
+   - Stores the internal state of the TextEditor
+   - Acts as a snapshot of the TextEditor's state at a particular point in time
+   - Provides controlled access to the stored state
+   - Is immutable to ensure state integrity
+
+3. **CareTaker**
+   - Keeps track of multiple memento objects
+   - Manages when to save the state and when to restore it
+   - Uses a stack to maintain history of states
+   - Never operates on or examines the contents of mementos
+
+4. **Main (Client)**
+   - Demonstrates how the pattern works
+   - Creates the originator and caretaker
+   - Initiates state changes and undo operations
+
+## How It Works
+
+1. The TextEditor (Originator) creates a memento containing a snapshot of its current internal state.
+2. The memento is passed to the CareTaker for safekeeping without exposing the TextEditor's internal state.
+3. Later, the memento can be returned to the TextEditor to restore it to a previous state.
+4. The CareTaker is responsible for storing mementos but never modifies them.
+
+## Benefits of the Memento Pattern
+
+1. **Preserves Encapsulation**: The internal state of the originator remains private.
+2. **Simplifies the Originator**: The originator doesn't need to keep track of its history.
+3. **Provides Undo Capability**: Makes it easy to implement undo/redo functionality.
+4. **Maintains State History**: Allows storing multiple states for complex undo systems.
+
+## Use Cases
+
+- Text editors with undo/redo functionality
+- Game state saving and loading
+- Transaction rollbacks in databases
+- Wizards with back/next functionality
+- Any application where you need to restore previous states
+
+## Potential Improvements for this Implementation
+
+1. Add a redo functionality to complement the undo operation
+2. Implement state comparison to avoid duplicate states
+3. Add timestamp or metadata to mementos for better state management
+4. Implement a limit on the history size to prevent memory issues
+5. Add error handling for edge cases (e.g., when history is empty)

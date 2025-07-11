@@ -1,7 +1,9 @@
 # Strategy Pattern Explanation
 
 ## Overview
-The Strategy Pattern is a behavioral design pattern that enables selecting an algorithm's implementation at runtime. It defines a family of algorithms, encapsulates each one, and makes them interchangeable. This pattern lets the algorithm vary independently from clients that use it.
+The Strategy Pattern is a behavioral design pattern that enables selecting an algorithm's implementation at runtime.
+It defines a family of algorithms, encapsulates each one, and makes them interchangeable.
+This pattern lets the algorithm vary independently from clients that use it.
 
 ## Components in this Implementation
 

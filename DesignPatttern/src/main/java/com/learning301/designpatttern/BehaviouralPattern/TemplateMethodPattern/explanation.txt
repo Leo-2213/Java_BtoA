@@ -1,0 +1,157 @@
+TEMPLATE METHOD PATTERN EXPLANATION
+===================================
+
+OVERVIEW
+--------
+The Template Method Pattern defines the skeleton of an algorithm in a base class, letting subclasses override specific steps without changing the algorithm's structure. It promotes code reuse and ensures consistent algorithm execution across different implementations.
+
+PATTERN COMPONENTS
+------------------
+1. Abstract Class - Defines template method and common operations
+2. Template Method - Defines algorithm skeleton (usually final)
+3. Abstract Methods - Steps that subclasses must implement
+4. Concrete Methods - Common implementations shared by all subclasses
+5. Hook Methods - Optional methods subclasses can override
+
+FOLDER STRUCTURE
+----------------
+TemplateMethodPattern/
+├── WithoutPattern/         - Direct implementation (problems)
+│   ├── CsvParser.java
+│   ├── JsonParser.java
+│   └── Main.java
+├── WithPattern/            - Template Method Pattern (solution)
+│   ├── Parser.java         - Abstract class with template method
+│   ├── CSVParser.java      - Concrete implementation
+│   ├── JsonParser.java     - Concrete implementation
+│   └── Main.java
+└── explanation.txt         - This file
+
+WITHOUT PATTERN PROBLEMS
+-------------------------
+1. CODE DUPLICATION
+   - Same algorithm structure repeated in every parser
+   - parse() method identical across CsvParser and JsonParser
+   - Violates DRY (Don't Repeat Yourself) principle
+
+2. MAINTENANCE NIGHTMARE
+   - Algorithm changes require updates in multiple classes
+   - Risk of inconsistent implementations
+   - Easy to forget updating all parser classes
+
+3. NO POLYMORPHISM
+   - Cannot treat different parsers uniformly
+   - No common interface or base class
+   - Client code must know specific parser types
+
+4. POOR EXTENSIBILITY
+   - Adding new parser types requires duplicating entire structure
+   - No guarantee new parsers follow same algorithm flow
+   - Inconsistency risk increases with more parser types
+
+5. ALGORITHM INCONSISTENCY
+   - Each parser might implement slightly different flows
+   - No enforcement of standard algorithm structure
+   - Debugging becomes harder with variations
+
+WITH PATTERN BENEFITS
+---------------------
+1. CODE REUSE
+   - Common algorithm steps implemented once in base class
+   - Subclasses only implement what's different
+   - Eliminates duplication of algorithm structure
+
+2. CONSISTENCY
+   - All subclasses follow exact same algorithm flow
+   - Template method enforces standard structure
+   - Impossible to deviate from defined algorithm
+
+3. MAINTAINABILITY
+   - Algorithm changes made in one place (base class)
+   - Automatic propagation to all subclasses
+   - Reduced risk of inconsistent updates
+
+4. POLYMORPHISM
+   - All parsers share common base type
+   - Client can treat different parsers uniformly
+   - Easy to add new parser types
+
+5. EXTENSIBILITY
+   - New parsers only implement abstract methods
+   - Automatic inheritance of algorithm structure
+   - Guaranteed consistency for new implementations
+
+ALGORITHM STRUCTURE
+-------------------
+Template Method in Parser.parse():
+1. Start parsing (common)
+2. Open file (common - can be overridden)
+3. Process data (abstract - must be implemented)
+4. Close file (common - can be overridden)
+5. Complete parsing (common)
+
+Only step 3 varies between CSV and JSON parsers.
+
+REAL-WORLD EXAMPLES
+-------------------
+- Data processing pipelines
+- Web request handling frameworks
+- Game AI behavior trees
+- Database connection patterns
+- File format converters
+- Testing frameworks (setup, test, teardown)
+- Sorting algorithms with different comparison logic
+
+WHEN TO USE
+-----------
+✓ Multiple classes share same algorithm structure
+✓ Algorithm has both common and varying steps
+✓ Want to avoid code duplication
+✓ Need to enforce consistent algorithm execution
+✓ Subclasses should only vary in specific steps
+
+WHEN NOT TO USE
+---------------
+✗ Algorithm is completely different across implementations
+✗ No common steps between different implementations
+✗ Simple operations that don't need structure
+✗ Performance is critical (inheritance adds overhead)
+
+KEY DIFFERENCES FROM STRATEGY PATTERN
+-------------------------------------
+Template Method Pattern:
+- Defines algorithm structure in base class
+- Subclasses implement specific steps
+- Uses inheritance
+- Algorithm skeleton is fixed
+
+Strategy Pattern:
+- Encapsulates entire algorithms as objects
+- Client chooses which algorithm to use
+- Uses composition
+- Can switch algorithms at runtime
+
+COMPARISON SUMMARY
+------------------
+Aspect              | WithoutPattern    | WithPattern
+--------------------|-------------------|------------------
+Code duplication    | High              | Minimal
+Algorithm consistency| Not guaranteed   | Enforced
+Maintainability     | Poor              | Excellent
+Extensibility       | Difficult         | Easy
+Polymorphism        | No                | Yes
+Common behavior     | Duplicated        | Shared
+Testing             | Complex           | Simple
+
+IMPLEMENTATION TIPS
+-------------------
+1. Make template method final to prevent overriding
+2. Use protected access for methods called by template
+3. Provide meaningful default implementations for hook methods
+4. Keep abstract methods focused and minimal
+5. Document the algorithm flow clearly
+6. Consider using hook methods for optional behavior
+
+CONCLUSION
+----------
+The Template Method Pattern is excellent for scenarios where you have a well-defined algorithm with both common and varying steps. It promotes code reuse, ensures consistency, and makes the codebase more maintainable and extensible. The pattern is particularly useful in frameworks and libraries where you want to provide a standard structure while allowing customization of specific behaviors.

@@ -89,24 +89,31 @@ class MacOsScrollBar implements ScrollBar{
 // ===== ABSTRACT FACTORY =====
 
 /**
- * UIFactory - Abstract Factory Interface
+ * UIFactory - Abstract Factory Class
  * 
- * Defines methods for creating families of related UI objects
+ * Defines abstract methods for creating families of related UI objects
  * Each concrete factory will create a consistent family of products
  * This is the core of Abstract Factory Pattern
+ * 
+ * Note: Changed from interface to abstract class
+ * - Allows for shared implementation if needed
+ * - Concrete factories extend rather than implement
+ * - Can provide default implementations for some methods
  */
-interface UIFactory{
+abstract class UIFactory{
     /**
      * Create a button specific to the UI family
+     * Abstract method - must be implemented by concrete factories
      * @return Button implementation for this UI family
      */
-    Button createButton();
+     abstract Button createButton();
     
     /**
      * Create a scrollbar specific to the UI family
+     * Abstract method - must be implemented by concrete factories
      * @return ScrollBar implementation for this UI family
      */
-    ScrollBar createScrollBar();
+    abstract ScrollBar createScrollBar();
 }
 
 // ===== CONCRETE FACTORIES =====
@@ -114,17 +121,26 @@ interface UIFactory{
 /**
  * WindowsFactory - Concrete Factory
  * 
+ * Extends UIFactory abstract class
  * Creates Windows-specific UI components
  * Ensures all created objects belong to Windows family
  * Guarantees consistency within the family
  */
-class WindowsFactory implements UIFactory{
+class WindowsFactory extends UIFactory{
 
+    /**
+     * Creates Windows-specific button
+     * Overrides abstract method from UIFactory
+     */
     @Override
     public Button createButton() {
         return new WindowsButton(); // Creates Windows-specific button
     }
 
+    /**
+     * Creates Windows-specific scrollbar
+     * Overrides abstract method from UIFactory
+     */
     @Override
     public ScrollBar createScrollBar() {
         return new WindowsScrollBar(); // Creates Windows-specific scrollbar
@@ -134,17 +150,26 @@ class WindowsFactory implements UIFactory{
 /**
  * MacOsFactory - Concrete Factory
  * 
+ * Extends UIFactory abstract class
  * Creates MacOS-specific UI components
  * Ensures all created objects belong to MacOS family
  * Guarantees consistency within the family
  */
-class MacOsFactory implements UIFactory{
+class MacOsFactory extends UIFactory{
 
+    /**
+     * Creates MacOS-specific button
+     * Overrides abstract method from UIFactory
+     */
     @Override
     public Button createButton() {
         return new MacOsButton(); // Creates MacOS-specific button
     }
 
+    /**
+     * Creates MacOS-specific scrollbar
+     * Overrides abstract method from UIFactory
+     */
     @Override
     public ScrollBar createScrollBar() {
         return new MacOsScrollBar(); // Creates MacOS-specific scrollbar

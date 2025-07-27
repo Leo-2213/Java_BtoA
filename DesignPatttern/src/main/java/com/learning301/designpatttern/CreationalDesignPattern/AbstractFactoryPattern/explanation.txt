@@ -3,7 +3,9 @@ ABSTRACT FACTORY PATTERN EXPLANATION
 
 OVERVIEW
 --------
-The Abstract Factory Pattern provides an interface for creating families of related or dependent objects without specifying their concrete classes. It's a creational pattern that ensures objects created together are compatible and belong to the same family.
+The Abstract Factory Pattern provides an interface for creating families of related or dependent objects
+without specifying their concrete classes. It's a creational pattern that ensures objects created together
+are compatible and belong to the same family.
 
 PATTERN EVALUATION: ✅ YOUR IMPLEMENTATION CORRECTLY FOLLOWS ABSTRACT FACTORY PATTERN
 ====================================================================================

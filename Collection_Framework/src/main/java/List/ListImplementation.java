@@ -2,6 +2,33 @@ package List;
 
 import java.util.*;
 
+/*
+ * ARRAYLIST OVERVIEW:
+ * - Resizable array implementation of List interface
+ * - Elements stored in contiguous memory (dynamic array)
+ * - Default initial capacity: 10, grows by 50% when full
+ * 
+ * STRUCTURE: [elem0][elem1][elem2][elem3]...[elemN][null][null]...
+ * 
+ * PROS:
+ * - O(1) random access by index (get/set)
+ * - O(1) amortized insertion at end
+ * - Memory efficient (no extra pointers)
+ * - Good cache locality (contiguous memory)
+ * - Fast iteration
+ * 
+ * CONS:
+ * - O(n) insertion/deletion in middle (shifting required)
+ * - O(n) resizing when capacity exceeded
+ * - Wasted memory if size << capacity
+ * - Not thread-safe
+ * 
+ * WHEN TO USE:
+ * - Frequent random access by index
+ * - More reads than insertions/deletions
+ * - When memory efficiency is important
+ * - When you know approximate size
+ */
 public class ListImplementation {
     public static void main(String[] args) {
         // Basic List Operations
@@ -17,30 +44,30 @@ public class ListImplementation {
         additionalOperations();
     }
     
-    // Basic add, get, set, remove operations
+    // Basic add, get, set, remove operations with time complexities
     private static void basicOperations() {
         System.out.println("=== Basic Operations ===");
         List<Integer> list = new ArrayList<>();
         
-        // Adding elements
+        // Adding elements - O(1) amortized at end, O(n) if resize needed
         list.add(2);
         list.add(4);
         list.add(2);
         list.add(44);
-        list.add(2, 3); // Insert at index 2
+        list.add(2, 3); // Insert at index 2 - O(n) due to shifting
         
-        // Accessing elements
+        // Accessing elements - O(1) direct array access
         System.out.println("Element at index 0: " + list.get(0));
         System.out.println("List size: " + list.size());
         
-        // Modifying elements
+        // Modifying elements - O(1) direct array access
         list.set(4, 50); // Replace element at index 4
         
-        // Checking existence
+        // Checking existence - O(n) linear search
         System.out.println("Contains 2: " + list.contains(2));
         System.out.println("Index of 4: " + list.indexOf(4));
         
-        // Removing elements
+        // Removing elements - O(n) due to shifting after removal
         list.remove(Integer.valueOf(2)); // Remove first occurrence of 2
         list.remove(0); // Remove element at index 0
         

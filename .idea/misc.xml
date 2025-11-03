@@ -6,6 +6,7 @@
       <list>
         <option value="$PROJECT_DIR$/OOPS/pom.xml" />
         <option value="$PROJECT_DIR$/DesignPatttern/pom.xml" />
+        <option value="$PROJECT_DIR$/Collection_Framework/pom.xml" />
       </list>
     </option>
   </component>

@@ -169,12 +169,12 @@ Bucket 3: Node1 → Node2 → Node3 → null
 LinkedList (≤8 nodes):  A → B → C → D → E → F → G → H
                         ↓ (when 9th node added)
 Red-Black Tree:           D
-                                   / \
-                                  B   F
-                                 / \ / \
-                                A  C E  G
-                                              \
-                                               H
+                         / \
+                        B   F
+                       / \ / \
+                      A  C E  G
+                               \
+                                H
 ```
 
 ### 3. Why Red-Black Tree?

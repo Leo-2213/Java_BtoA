@@ -92,6 +92,7 @@ thread.start(); // ✅ Correct way
 // 🚀 Creating and starting
 Thread thread = new Thread(runnable, "ThreadName");
 thread.start();                              // Start thread execution
+thread.run();                                // ❌ DON'T call directly!
 
 // ⚙️ Thread properties
 thread.setName("NewName");                   // Set thread name
@@ -100,9 +101,11 @@ thread.setPriority(Thread.MAX_PRIORITY);     // Set priority (1-10)
 
 // 📊 Getting thread info
 String name = thread.getName();              // Get thread name
+long id = thread.getId();                    // Get unique thread ID
 int priority = thread.getPriority();         // Get priority
 boolean isDaemon = thread.isDaemon();        // Check if daemon
 Thread.State state = thread.getState();      // Get current state
+boolean isAlive = thread.isAlive();          // Check if thread is alive
 ```
 
 ### 🔄 **Thread Synchronization and Control**
@@ -111,19 +114,97 @@ Thread.State state = thread.getState();      // Get current state
 // ⏳ Waiting for thread completion
 thread.join();                               // Wait indefinitely
 thread.join(5000);                          // Wait max 5 seconds
+thread.join(5000, 500000);                  // Wait 5.5 seconds (millis + nanos)
 
 // ⛔ Thread interruption
-thread.interrupt();                          // Interrupt the thread
-boolean interrupted = thread.isInterrupted(); // Check if interrupted
+thread.interrupt();                          // Send interrupt signal
+boolean interrupted = thread.isInterrupted(); // Check interrupt status
+boolean wasInterrupted = Thread.interrupted(); // Check & clear interrupt status
 
-// 😴 Sleep and yield
+// 😴 Sleep and timing
 Thread.sleep(1000);                         // Sleep for 1 second
-Thread.yield();                             // Hint to scheduler
+Thread.sleep(1000, 500000);                // Sleep for 1.5 seconds
 
-// 📍 Current thread info
+// 🔄 Cooperative scheduling
+Thread.yield();                             // Hint scheduler to yield CPU
+
+// 📍 Current thread operations
 Thread current = Thread.currentThread();    // Get current thread
-int activeCount = Thread.activeCount();     // Count active threads
+int activeCount = Thread.activeCount();     // Count active threads in group
+Thread.UncaughtExceptionHandler handler = thread.getUncaughtExceptionHandler();
 ```
+
+### 🎯 **Advanced Thread Control**
+
+```java
+// 🔍 Thread monitoring
+ThreadGroup group = thread.getThreadGroup(); // Get thread group
+StackTraceElement[] stack = thread.getStackTrace(); // Get stack trace
+Thread.State state = thread.getState();      // Monitor thread state
+
+// 🛡️ Exception handling
+thread.setUncaughtExceptionHandler((t, e) -> {
+    System.err.println("Thread " + t.getName() + " threw exception: " + e);
+});
+
+// 🔄 Thread group operations
+ThreadGroup mainGroup = Thread.currentThread().getThreadGroup();
+int activeThreads = mainGroup.activeCount();
+mainGroup.list(); // Print all threads in group
+```
+
+### ⚡ **Interrupt Handling Patterns**
+
+```java
+// ✅ Proper interrupt handling in loops
+while (!Thread.currentThread().isInterrupted()) {
+    try {
+        // Do work
+        Thread.sleep(100);
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt(); // Restore interrupt status
+        break; // Exit loop
+    }
+}
+
+// ✅ Interrupt-aware blocking operations
+try {
+    someBlockingOperation();
+} catch (InterruptedException e) {
+    Thread.currentThread().interrupt(); // Always restore!
+    return; // or throw new RuntimeException(e)
+}
+```
+
+### 📊 **Thread Method Reference Table**
+
+| 🔧 **Method** | 📝 **Description** | ⚠️ **Notes** |
+|---------------|-------------------|---------------|
+| `start()` | Begin thread execution | Can only call once |
+| `join()` | Wait for thread completion | Blocks calling thread |
+| `interrupt()` | Send interrupt signal | Doesn't force stop |
+| `isInterrupted()` | Check interrupt status | Doesn't clear flag |
+| `interrupted()` | Check & clear interrupt | Static method |
+| `yield()` | Hint to yield CPU | Not guaranteed |
+| `sleep()` | Pause execution | Can be interrupted |
+| `setDaemon()` | Set daemon status | Before start() only |
+| `setPriority()` | Set thread priority | 1-10 range |
+| `getName()` | Get thread name | For debugging |
+| `getId()` | Get unique ID | Never reused |
+| `getState()` | Get current state | For monitoring |
+| `isAlive()` | Check if running | After start() |
+
+### 🚨 **Deprecated Methods (DON'T USE)**
+
+```java
+// ❌ These methods are unsafe and deprecated
+thread.stop();     // Dangerous - can corrupt data
+thread.suspend();  // Can cause deadlocks
+thread.resume();   // Paired with suspend()
+thread.destroy();  // Never implemented
+```
+
+> 💡 **Use interrupt() instead** of deprecated stop() method for safe thread termination!
 
 ---
 

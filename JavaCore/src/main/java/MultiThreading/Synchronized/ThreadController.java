@@ -1,4 +1,4 @@
-package MultiThreading;
+package MultiThreading.Synchronized;
 
 // Thread-safe counter using synchronized method
 class SynchronizedCounter {
